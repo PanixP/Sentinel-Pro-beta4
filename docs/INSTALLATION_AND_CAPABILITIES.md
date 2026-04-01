@@ -1,4 +1,10 @@
 # Sentinel Savant Rubi Bridge
+
+> Copyright (c) Savant Cyprus 2026
+>
+> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+
 ## Installation, Capabilities, and Profile/Script Differences
 
 This guide covers the complete deployment model for the Sentinel bridge bundle

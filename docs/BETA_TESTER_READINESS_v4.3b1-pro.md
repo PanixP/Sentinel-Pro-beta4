@@ -1,5 +1,11 @@
 # Sentinel Pro Beta Readiness v4.3b1-pro
 
+> Copyright (c) Savant Cyprus 2026
+>
+> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+
+
 This checklist is the release-handoff pack for beta testers.
 
 ## Scope

@@ -1,4 +1,10 @@
 # Sentinel Pro and Sentinel Savant Rubi Bridge
+
+> Copyright (c) Savant Cyprus 2026
+>
+> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+
 ## Engineering Whitepaper (v4.1)
 
 Date: 2026-03-30

@@ -1,5 +1,11 @@
 # Sentinel Documentation
 
+> Copyright (c) Savant Cyprus 2026
+>
+> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+
+
 This folder contains the bridge/blueprint deployment and release docs for
 `v4.3b1-pro`.
 

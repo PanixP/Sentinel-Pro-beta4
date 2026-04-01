@@ -2,6 +2,10 @@
 <component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="racepoint_component_profile.xsd" manufacturer="Panix" model="Sentinel Pro Smart Host" alias="SmartHost Sentinel Rubi Bridge v4.3b1-pro" device_class="Generic_component" minimum_component_engine_version="8.4" rpm_xml_version="1.2">
     <notes>SmartHost Sentinel Rubi Bridge v4.3b1-pro
 
+Copyright (c) Savant Cyprus 2026
+App Microsite: https://savantcyprus.com/sentinel-pro.html
+Bridge Microsite: https://savantcyprus.com/sentinel-pro.html
+
 Purpose
 - Clean application bridge profile for Savant host.
 - Uses benumc/rubi as the runtime console layer.

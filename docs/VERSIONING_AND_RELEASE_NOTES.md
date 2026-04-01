@@ -1,4 +1,10 @@
 # Sentinel Platform
+
+> Copyright (c) Savant Cyprus 2026
+>
+> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+
 ## Versioning and Release Notes
 
 This file tracks bridge and blueprint release lines for this repository.
