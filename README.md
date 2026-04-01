@@ -2,8 +2,7 @@
 
 > Copyright (c) Savant Cyprus 2026
 >
-> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
-> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge & App microsite link: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
 
 
 Bridge and Blueprint release repository for Sentinel Rubi bridge build `v4.3b1-pro`.

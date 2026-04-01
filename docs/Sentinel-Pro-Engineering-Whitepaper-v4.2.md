@@ -2,8 +2,7 @@
 
 > Copyright (c) Savant Cyprus 2026
 >
-> App Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
-> Bridge Microsite: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
+> Bridge & App microsite link: [Savant Sentinel Pro](https://savantcyprus.com/sentinel-pro.html)
 
 ## Full Engineering and Security Whitepaper (v4.2)
 
