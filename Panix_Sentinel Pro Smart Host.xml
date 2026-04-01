@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="racepoint_component_profile.xsd" manufacturer="Panix" model="Sentinel Pro Smart Host" alias="SmartHost Sentinel Rubi Bridge v4.3b1-pro" device_class="Generic_component" minimum_component_engine_version="8.4" rpm_xml_version="1.2">
+    <notes>SmartHost Sentinel Rubi Bridge v4.3b1-pro
+
+Purpose
+- Clean application bridge profile for Savant host.
+- Uses benumc/rubi as the runtime console layer.
+- Opens an app-facing TCP port for the mobile client backend.
+
+Upstream runtime
+- benumc/rubi
+- https://github.com/benumc/rubi
+
+Design rules
+- no references to prior automation bridges
+- app-facing port is configurable in Blueprint
+- default app-facing port is 42042
+- runtime status is exposed to StateCenter for diagnostics
+- bridge auto-starts when the profile loads
+- harvest is discovery-oriented instead of fixed to three hard-coded globals
+- users_file points to the persistent Sentinel home store on the host filesystem
+
+Version notes
+- v4.3b1-pro
+- SmartHosts profile using `/home/RPM/Sentinel` as the default writable bridge root.
+- Keeps live `sclibridge statenames` discovery, batched `readstate`, HTTPS transport, and dual-layout host support.
+- Uses ApplicationSupport path layout without a space, matching SmartHosts filesystem conventions.
+</notes>
+    <control_interfaces preferred="ip">
+        <ip name_on_component="Rubi" response_time_length_ms="1000" port="25809" protocol="tcp">
+            <send_postfix type="hex">0A</send_postfix>
+            <receive_end_condition test_condition="data" type="hex">0A</receive_end_condition>
+        </ip>
+    </control_interfaces>
+    <media_interfaces>
+        <data name_on_component="Ethernet">
+            <combined_media>
+                <data_media type="ethernet"/>
+                <control port="25809"/>
+            </combined_media>
+        </data>
+    </media_interfaces>
+    <state_variable_list>
+        <state_variable name="local_script_path" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">/home/RPM/Sentinel/</state_variable>
+        <state_variable name="script_file" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">savant_network_sentinel_clean_rubi_bridge_v4_3b1_pro.rb</state_variable>
+        <state_variable name="bind_host" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">0.0.0.0</state_variable>
+        <state_variable name="app_port" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">42042</state_variable>
+        <state_variable name="use_https" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">1</state_variable>
+        <state_variable name="tls_cert_file" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">/home/RPM/Sentinel/sentinel_bridge.crt</state_variable>
+        <state_variable name="tls_key_file" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">/home/RPM/Sentinel/sentinel_bridge.key</state_variable>
+        <state_variable name="log_directory" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">/home/RPM/Sentinel/logs/</state_variable>
+        <state_variable name="log_level" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">INFO</state_variable>
+        <state_variable name="users_file" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">/home/RPM/Sentinel/sentinel_users.json</state_variable>
+        <state_variable name="bootstrap_username" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">installer</state_variable>
+        <state_variable name="bootstrap_password" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">change_me_now</state_variable>
+        <state_variable name="bootstrap_config_revision" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">v1</state_variable>
+        <state_variable name="integrator_reset_flag" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">0</state_variable>
+        <state_variable name="harvest_state_list" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes"></state_variable>
+        <state_variable name="harvest_poll_seconds" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">15</state_variable>
+        <state_variable name="harvest_mode" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">hybrid</state_variable>
+        <state_variable name="harvest_manifest_file" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">auto</state_variable>
+        <state_variable name="harvest_max_states" owning_logical_component="Generic_component" state_center_type="string" user_editable="yes">7000</state_variable>
+        <dynamic_state_variable name="APIServerStatus" owning_logical_component="Generic_component" state_center_binding="APIServerStatus" state_center_type="string"/>
+        <dynamic_state_variable name="APIBindHost" owning_logical_component="Generic_component" state_center_binding="APIBindHost" state_center_type="string"/>
+        <dynamic_state_variable name="APIPort" owning_logical_component="Generic_component" state_center_binding="APIPort" state_center_type="integer"/>
+        <dynamic_state_variable name="APIUsersLoaded" owning_logical_component="Generic_component" state_center_binding="APIUsersLoaded" state_center_type="integer"/>
+        <dynamic_state_variable name="APISessionsActive" owning_logical_component="Generic_component" state_center_binding="APISessionsActive" state_center_type="integer"/>
+        <dynamic_state_variable name="APILastError" owning_logical_component="Generic_component" state_center_binding="APILastError" state_center_type="string"/>
+        <dynamic_state_variable name="HarvestStatus" owning_logical_component="Generic_component" state_center_binding="HarvestStatus" state_center_type="string"/>
+        <dynamic_state_variable name="HarvestStateCount" owning_logical_component="Generic_component" state_center_binding="HarvestStateCount" state_center_type="integer"/>
+        <dynamic_state_variable name="HarvestPollSeconds" owning_logical_component="Generic_component" state_center_binding="HarvestPollSeconds" state_center_type="integer"/>
+        <dynamic_state_variable name="HarvestLastError" owning_logical_component="Generic_component" state_center_binding="HarvestLastError" state_center_type="string"/>
+    </state_variable_list>
+    <logical_component logical_component_name="Generic_component">
+        <implementation>
+            <data name_on_component="Ethernet"/>
+        </implementation>
+        <status_messages>
+            <status_message name="sentinel_api_status">
+                <constant type="character">sentinel_api,</constant>
+                <data type="character" terminator=","><update state="APIServerStatus" type="string"/></data>
+                <data type="character" terminator=","><update state="APIBindHost" type="string"/></data>
+                <data type="character" terminator=","><update state="APIPort" type="integer"/></data>
+                <data type="character" terminator=","><update state="APIUsersLoaded" type="integer"/></data>
+                <data type="character" terminator=","><update state="APISessionsActive" type="integer"/></data>
+                <data type="character" terminator_type="end_of_data"><update state="APILastError" type="string"/></data>
+            </status_message>
+            <status_message name="statecenter_harvest_status">
+                <constant type="character">statecenter_harvest,</constant>
+                <data type="character" terminator=","><update state="HarvestStatus" type="string"/></data>
+                <data type="character" terminator=","><update state="HarvestStateCount" type="integer"/></data>
+                <data type="character" terminator=","><update state="HarvestPollSeconds" type="integer"/></data>
+                <data type="character" terminator_type="end_of_data"><update state="HarvestLastError" type="string"/></data>
+            </status_message>
+        </status_messages>
+        <custom_component_actions>
+            <action name="AutoStart">
+                <execute_on_schedule period_ms="0"/>
+                <execute_action_after_delay ms_delay="2500" action_name="StartBridge" action_type="CUSTOM"/>
+            </action>
+            <action name="StartBridge">
+                <command_interface interface="ip">
+                    <command response_required="no">
+                        <parameter_list>
+                            <parameter parameter_data_type="character">begin; load File.join('</parameter>
+                            <parameter parameter_data_type="character" state_variable="local_script_path"/>
+                            <parameter parameter_data_type="character">','</parameter>
+                            <parameter parameter_data_type="character" state_variable="script_file"/>
+                            <parameter parameter_data_type="character">'); savant_network_sentinel_dispatch('bridge_start,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bind_host"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="app_port"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="use_https"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="tls_cert_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="tls_key_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="log_directory"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="log_level"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="users_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_username"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_password"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_config_revision"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="integrator_reset_flag"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_state_list"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_poll_seconds"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_mode"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_manifest_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_max_states"/>
+                            <parameter parameter_data_type="character">'); rescue =&gt; e; puts "sentinel_api,error,0.0.0.0,0,0,0,xml_start_exception:#{e.class}:#{e.message}".gsub(',', ';'); STDOUT.flush; end</parameter>
+                        </parameter_list>
+                        <delay ms_delay="100"/>
+                    </command>
+                </command_interface>
+            </action>
+            <action name="StopBridge">
+                <command_interface interface="ip"><command response_required="no"><parameter_list><parameter parameter_data_type="character">savant_network_sentinel_dispatch('bridge_stop')</parameter></parameter_list><delay ms_delay="50"/></command></command_interface>
+            </action>
+            <action name="ReloadBridge">
+                <command_interface interface="ip">
+                    <command response_required="no">
+                        <parameter_list>
+                            <parameter parameter_data_type="character">begin; savant_network_sentinel_dispatch('bridge_reload,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bind_host"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="app_port"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="use_https"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="tls_cert_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="tls_key_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="log_directory"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="log_level"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="users_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_username"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_password"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="bootstrap_config_revision"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="integrator_reset_flag"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_state_list"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_poll_seconds"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_mode"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_manifest_file"/>
+                            <parameter parameter_data_type="character">,</parameter>
+                            <parameter parameter_data_type="character" state_variable="harvest_max_states"/>
+                            <parameter parameter_data_type="character">'); rescue =&gt; e; puts "sentinel_api,error,0.0.0.0,0,0,0,xml_reload_exception:#{e.class}:#{e.message}".gsub(',', ';'); STDOUT.flush; end</parameter>
+                        </parameter_list>
+                        <delay ms_delay="50"/>
+                    </command>
+                </command_interface>
+            </action>
+        </custom_component_actions>
+    </logical_component>
+</component>

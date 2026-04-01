@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+.DS_Store
+*.log
+logs/
+tmp/
+*.swp
+.deriveddata*/
+DerivedData/
+=======
+.deriveddata*/
+DerivedData/
+*.log
+>>>>>>> origin/codex/sentinel-pro-baseline

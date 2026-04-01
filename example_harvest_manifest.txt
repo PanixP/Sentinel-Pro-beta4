@@ -1,0 +1,12 @@
+global.CurrentMinute
+global.rubi
+global.rubierror
+
+# Replace the example entries below with real StateCenter paths from the host.
+# These are illustrative only.
+# LivingRoom.RoomNumberOfLightsOn
+# LivingRoom.RoomNumberOfShadesOpen
+# LivingRoom.RoomCurrentTemperature
+# MasterBedroom.RoomNumberOfLightsOn
+# MasterBedroom.RoomNumberOfShadesOpen
+# MasterBedroom.RoomCurrentTemperature
